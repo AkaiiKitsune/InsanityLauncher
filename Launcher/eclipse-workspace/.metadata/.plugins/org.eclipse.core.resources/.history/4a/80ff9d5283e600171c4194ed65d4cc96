@@ -1,0 +1,30 @@
+package insanity.Boostrap;
+
+import static fr.theshark34.swinger.Swinger.*;
+import fr.theshark34.openlauncherlib.util.SplashScreen;
+
+public class InsanityBootstrap {
+	
+	private static SplashScreen splash;
+	
+	public static void main() 
+	{
+		setResourcePath("/insanity/Launcher/Resource");
+		displaySplash();
+		doUpdate();
+		launchLauncher();
+	}
+
+	private static void displaySplash() {
+		splash = new SplashScreen("Insanity", getResource("splash.png"));
+		splash.setVisible(true);
+	}
+	
+	private static void doUpdate() {
+		
+	}
+	
+	private static void launchLauncher() {
+		
+	}
+}

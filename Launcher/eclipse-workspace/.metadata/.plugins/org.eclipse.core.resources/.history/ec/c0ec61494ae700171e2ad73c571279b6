@@ -1,0 +1,90 @@
+package insanity.Boostrap;
+
+import static fr.theshark34.swinger.Swinger.getResource;
+import static fr.theshark34.swinger.Swinger.getTransparentWhite;
+import static fr.theshark34.swinger.Swinger.setResourcePath;
+
+import java.io.File;
+import java.io.IOException;
+
+import fr.theshark34.openlauncherlib.external.ClasspathConstructor;
+import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
+import fr.theshark34.openlauncherlib.util.CrashReporter;
+import fr.theshark34.openlauncherlib.util.SplashScreen;
+import fr.theshark34.openlauncherlib.util.explorer.Explorer;
+import fr.theshark34.supdate.BarAPI;
+import fr.theshark34.supdate.SUpdate;
+import fr.theshark34.swinger.colored.SColoredBar;
+
+public class InsanityBootstrap {
+	
+	private static SplashScreen splash;
+	private static SColoredBar bar;
+	private static Thread barThread;
+	
+	private static final File IF_DIR = new File(GameDirGenerator.createGameDir("Insanity"), "Launcher");
+	private static CrashReporter errorutil = new CrashReporter("Launcher/crashes", IF_DIR);
+	
+	public static void main(String [] args) 
+	{
+		setResourcePath("/insanity/Boostrap/Resource");
+		displaySplash();
+		try
+		{
+		doUpdate();
+		} catch (Exception e) {
+			errorutil.catchError(e, "impossible de mettre a jour le launcher !");
+			barThread.interrupt();
+		}
+		
+		try {
+			launchLauncher();
+		} catch (IOException e) {
+
+			errorutil.catchError(e, "impossible de lancer le launcher !");
+		}
+
+	}
+
+	private static void displaySplash() {
+		splash = new SplashScreen("Insanity", getResource("splash.png"));
+		splash.setLayout(null);
+		
+		bar = new SColoredBar(getTransparentWhite(100), getTransparentWhite(175)); 
+		bar.setBounds(10, 480, 330, 20);
+		splash.add(bar);
+		
+		splash.setVisible(true);
+	}
+	
+	private static void doUpdate() throws Exception {
+		SUpdate su = new SUpdate("http://s-update.officielity.fr/insanityBootstrap/", new File(IF_DIR, "Launcher"));
+		
+		barThread = new Thread() {
+			@Override
+			public void run() {
+				while(!this.isInterrupted()) {
+					bar.setValue((int)(BarAPI.getNumberOfTotalDownloadedBytes() / 1000));
+					bar.setMaximum((int)(BarAPI.getNumberOfTotalBytesToDownload() / 1000));
+				}
+			}
+		};
+		barThread.start();
+		
+		su.start();
+		barThread.interrupt();
+	}
+	
+	private static void launchLauncher() throws IOException {
+
+		ClasspathConstructor constructor = new ClasspathConstructor();
+		ExploredDirectory gameDir = Explorer.dir(SC_B_DIR)
+		splash.setVisible(false);
+		try {
+			p.waitFor();
+		} catch (InterruptedException e) {		
+		}
+		System.exit(0);
+		
+	}
+}

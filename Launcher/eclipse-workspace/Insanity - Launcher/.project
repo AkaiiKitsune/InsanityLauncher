@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Insanity - Launcher</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>src/insanity/Launcher/Resource/background.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Launcher/Assets/background.png</locationURI>
+		</link>
+		<link>
+			<name>src/insanity/Launcher/Resource/exit.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Launcher/Assets/exit.png</locationURI>
+		</link>
+		<link>
+			<name>src/insanity/Launcher/Resource/icon.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Launcher/Assets/icon.png</locationURI>
+		</link>
+		<link>
+			<name>src/insanity/Launcher/Resource/play.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Launcher/Assets/play.png</locationURI>
+		</link>
+		<link>
+			<name>src/insanity/Launcher/Resource/ram.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Launcher/Assets/ram.png</locationURI>
+		</link>
+		<link>
+			<name>src/insanity/Launcher/Resource/reduce.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Launcher/Assets/reduce.png</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

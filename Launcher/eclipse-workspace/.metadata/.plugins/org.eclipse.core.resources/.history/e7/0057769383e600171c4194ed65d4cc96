@@ -1,0 +1,37 @@
+package insanity.Boostrap;
+
+import static fr.theshark34.swinger.Swinger.*;
+import fr.theshark34.openlauncherlib.util.SplashScreen;
+import fr.theshark34.swinger.colored.SColoredBar;
+
+public class InsanityBootstrap {
+	
+	private static SplashScreen splash;
+	private static SColoredBar bar;
+	
+	public static void main() 
+	{
+		setResourcePath("/insanity/Launcher/Resource");
+		displaySplash();
+		doUpdate();
+		launchLauncher();
+	}
+
+	private static void displaySplash() {
+		splash = new SplashScreen("Insanity", getResource("splash.png"));
+		
+		bar = new SColoredBar(getTransparentWhite(100), getTransparentWhite(175)); 
+		bar.setBounds(0, 490, 350, 20);
+		splash.add(bar);
+		
+		splash.setVisible(true);
+	}
+	
+	private static void doUpdate() {
+		
+	}
+	
+	private static void launchLauncher() {
+		
+	}
+}

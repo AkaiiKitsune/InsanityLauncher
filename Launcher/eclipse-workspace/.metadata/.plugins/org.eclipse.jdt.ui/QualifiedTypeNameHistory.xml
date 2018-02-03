@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.launcher.GameType"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.launcher.GameTweak"/>
+<fullyQualifiedTypeName name="javax.swing.UIManager"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.launcher.util.WindowMover"/>
+<fullyQualifiedTypeName name="fr.theshark34.swinger.event.SwingerEventListener"/>
+<fullyQualifiedTypeName name="fr.theshark34.openauth.AuthPoints"/>
+<fullyQualifiedTypeName name="fr.theshark34.openauth.model.AuthAgent"/>
+<fullyQualifiedTypeName name="fr.theshark34.openauth.model.response.AuthResponse"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.launcher.AuthInfos"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
+<fullyQualifiedTypeName name="fr.theshark34.supdate.application.integrated.FileDeleter"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.minecraft.MinecraftLauncher"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.util.ErrorUtil"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.util.Saver"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.LaunchException"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.util.CrashReporter"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="fr.theshark34.swinger.animation.Animator"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.util.SplashScreen"/>
+<fullyQualifiedTypeName name="fr.theshark34.swinger.Swinger"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="fr.theshark34.supdate.BarAPI"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.util.explorer.Explorer"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.util.explorer.ExploredDirectory"/>
+<fullyQualifiedTypeName name="fr.theshark34.openlauncherlib.external.ExternalLauncher"/>
+<fullyQualifiedTypeName name="java.lang.Process"/>
+</qualifiedTypeNameHistroy>

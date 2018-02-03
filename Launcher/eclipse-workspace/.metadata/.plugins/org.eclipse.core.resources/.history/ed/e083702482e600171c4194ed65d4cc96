@@ -1,0 +1,25 @@
+package insanity.Boostrap;
+
+
+
+public class InsanityBootstrap {
+	
+	public static void main() 
+	{
+		displaySplash();
+		doUpdate();
+		launchLauncher();
+	}
+
+	private static void displaySplash() {
+		
+	}
+	
+	private static void doUpdate() {
+		
+	}
+	
+	private static void launchLauncher() {
+		
+	}
+}

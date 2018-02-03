@@ -1,0 +1,60 @@
+package insanity.Launcher;
+
+import com.sun.awt.AWTUtilities;
+import fr.theshark34.openlauncherlib.util.CrashReporter;
+import fr.theshark34.swinger.Swinger;
+import fr.theshark34.swinger.animation.Animator;
+import fr.theshark34.swinger.util.WindowMover;
+import javax.swing.JFrame;
+
+
+@SuppressWarnings("serial")
+public class LauncherFrame
+  extends JFrame
+{
+  private static LauncherFrame instance;
+  private LauncherPanel launcherPanel;
+  private static CrashReporter crashReporter;
+  
+  public LauncherFrame()
+  {
+    setTitle("Insanity Launcher");
+    setSize(975, 625);
+    setDefaultCloseOperation(3);
+    setLocationRelativeTo(null);
+    setUndecorated(true);
+    setIconImage(Swinger.getResource("icon.png"));
+    setContentPane(this.launcherPanel = new LauncherPanel());
+    AWTUtilities.setWindowOpacity(this, 0.0F);
+    
+    WindowMover mover = new WindowMover(this);
+    addMouseListener(mover);
+    addMouseMotionListener(mover);
+    
+    setVisible(true);
+    
+    Animator.fadeInFrame(this, 2);
+  }
+  
+  public static void main(String[] args)
+  {
+    Swinger.setSystemLookNFeel();
+    Swinger.setResourcePath("/insanity/Launcher/Resource");
+    Launcher.IF_CRASHES_DIR.mkdirs();
+    crashReporter = new CrashReporter("Insanity launcher", Launcher.IF_CRASHES_DIR);
+    
+    instance = new LauncherFrame();
+  }
+  
+  public static LauncherFrame getInstace() {
+    return instance;
+  }
+  
+  public LauncherPanel getLauncherPanel() {
+    return launcherPanel;
+  }
+  
+  public static CrashReporter getCrashReporter() {
+    return crashReporter;
+  }
+}

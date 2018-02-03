@@ -1,0 +1,223 @@
+package insanity.Launcher;
+
+import fr.theshark34.openauth.AuthenticationException;
+import fr.theshark34.openlauncherlib.LaunchException;
+import fr.theshark34.openlauncherlib.util.Saver;
+import fr.theshark34.openlauncherlib.util.ramselector.RamSelector;
+import fr.theshark34.swinger.Swinger;
+import fr.theshark34.swinger.animation.Animator;
+import fr.theshark34.swinger.colored.SColoredBar;
+import fr.theshark34.swinger.colored.SColoredButton;
+import fr.theshark34.swinger.event.SwingerEvent;
+import fr.theshark34.swinger.event.SwingerEventListener;
+import fr.theshark34.swinger.textured.STexturedButton;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+
+@SuppressWarnings("serial")
+public class LauncherPanel
+  extends JPanel
+  implements SwingerEventListener
+{
+  private Image background = Swinger.getResource("background.png");
+  
+  private Saver saver = new Saver(new File(Launcher.IF_DIR + "\\Launcher", "launcher.properties"));
+  
+
+  private JTextField usernameField = new JTextField(saver.get("username"));
+  
+  private JPasswordField passwordField = new JPasswordField(saver.get("password"));
+  @SuppressWarnings("deprecation")
+public LauncherPanel() { if (passwordField.getText().length() != 0) {
+      String password = saver.get("password");
+      password = decrypt(password);
+      passwordField = new JPasswordField(password);
+    }
+    
+    playButton = new STexturedButton(Swinger.getResource("play.png"));
+    exitButton = new STexturedButton(Swinger.getResource("exit.png"));
+    reduceButton = new STexturedButton(Swinger.getResource("reduce.png"));
+    
+    ramButton = new SColoredButton(Swinger.getTransparentWhite(100), Swinger.getTransparentWhite(175));
+    
+    progressBar = new SColoredBar(Swinger.getTransparentWhite(100), Swinger.getTransparentWhite(175));
+    infoLabel = new JLabel("Clique sur jouer !", 0);
+    
+
+    ramSelector = new RamSelector(new File(Launcher.IF_DIR + "\\Launcher", "ram.txt"));
+    
+
+    setLayout(null);
+    
+
+
+    usernameField.setForeground(Color.WHITE);
+    usernameField.setFont(usernameField.getFont().deriveFont(20.0F));
+    usernameField.setCaretColor(Color.WHITE);
+    usernameField.setOpaque(false);
+    usernameField.setBorder(null);
+    usernameField.setBounds(330, 192, 316, 37);
+    add(usernameField);
+    
+    passwordField.setForeground(Color.WHITE);
+    passwordField.setFont(passwordField.getFont().deriveFont(20.0F));
+    passwordField.setCaretColor(Color.WHITE);
+    passwordField.setOpaque(false);
+    passwordField.setBorder(null);
+    passwordField.setBounds(330, 273, 316, 37);
+    add(passwordField);
+    
+
+
+    exitButton.addEventListener(this);
+    exitButton.setBounds(923, 0, 48, 18);
+    add(exitButton);
+    
+    reduceButton.addEventListener(this);
+    reduceButton.setBounds(895, 0, 27, 18);
+    add(reduceButton);
+    
+
+
+    playButton.addEventListener(this);
+    playButton.setBounds(360, 343, 253, 64);
+    add(playButton);
+    
+
+    infoLabel.setBounds(3, 572, 969, 22);
+    infoLabel.setForeground(Color.WHITE);
+    infoLabel.setFont(usernameField.getFont());
+    add(infoLabel);
+    
+    progressBar.setBounds(3, 600, 969, 22);
+    add(progressBar);
+    
+
+    ramButton.addEventListener(this);
+    ramButton.setBounds(867, 0, 27, 18);
+    add(ramButton);
+  }
+  
+  private STexturedButton playButton;
+  private STexturedButton exitButton;
+  
+  public void onEvent(SwingerEvent e) { if (e.getSource() == exitButton)
+    {
+      Animator.fadeOutFrame(LauncherFrame.getInstace(), 2, new Runnable()
+      {
+
+        public void run()
+        {
+          System.exit(0);
+        }
+      });
+    }
+    if (e.getSource() == reduceButton) LauncherFrame.getInstace().setState(1);
+    if (e.getSource() == ramButton)
+    {
+
+      ramSelector.display();
+    }
+    if (e.getSource() == playButton) {
+      ramSelector.save();
+      setFieldEnabled(false);
+      if ((usernameField.getText().replaceAll(" ", "").length() == 0) || (passwordField.getText().length() == 0)) {
+        JOptionPane.showMessageDialog(this, "Erreur, veuillez entrer un pseudo et un mot de passe valide.", "Erreur identifiants", 0);
+        setFieldEnabled(true);
+        return;
+      }
+      
+      Thread t = new Thread()
+      { 
+        public void run()
+        {
+          try {
+            Launcher.auth(usernameField.getText(), passwordField.getText());
+          } catch (AuthenticationException e) {
+            JOptionPane.showMessageDialog(LauncherPanel.this, "Erreur, impossible de se connecter : " + e.getErrorModel().getErrorMessage(), "Erreur Connection", 0);
+            LauncherPanel.this.setFieldEnabled(true);
+            return;
+          }
+          
+          saver.set("username", usernameField.getText());
+          saver.set("password", encrypt(passwordField.getText()));
+          try
+          {
+            Launcher.update();
+            Launcher.update();
+          } catch (Exception e) {
+            Launcher.interruptThread();
+            Launcher.getCrashReporter().catchError(e, "Impossible de mettre a jour Insanity !");
+            LauncherPanel.this.setFieldEnabled(true);
+            return;
+          }
+          try
+          {
+            Launcher.launch();
+          } catch (LaunchException e) {
+            Launcher.getCrashReporter().catchError(e, "Impossible de lancer Insanity !");
+            LauncherPanel.this.setFieldEnabled(true);
+            return;
+          }
+        }
+      };
+      t.start(); } }
+  
+  private STexturedButton reduceButton;
+  private SColoredButton ramButton;
+  private SColoredBar progressBar;
+  private JLabel infoLabel;
+  RamSelector ramSelector;
+  public void paintComponent(Graphics graphics) { super.paintComponent(graphics);
+    Swinger.drawFullsizedImage(graphics, this, background);
+  }
+  
+  private void setFieldEnabled(boolean enabled)
+  {
+    usernameField.setEnabled(enabled);
+    passwordField.setEnabled(enabled);
+    playButton.setEnabled(enabled);
+    ramButton.setEnabled(enabled);
+  }
+  
+  public SColoredBar getProgressBar() {
+    return progressBar;
+  }
+  
+  public void setinfoText(String text) {
+    infoLabel.setText(text);
+  }
+  
+  public RamSelector getRamSelector() {
+    return ramSelector;
+  }
+  
+  public String encrypt(String password) {
+    String crypte = "";
+    for (int i = 0; i < password.length(); i++) {
+      int c = password.charAt(i) ^ 0x30;
+      crypte = crypte + (char)c;
+    }
+    return crypte;
+  }
+  
+  public String decrypt(String password) {
+    String aCrypter = "";
+    if (passwordField.getText().length() != 0)
+    {
+      for (int i = 0; i < password.length(); i++) {
+        int c = password.charAt(i) ^ 0x30;
+        aCrypter = aCrypter + (char)c;
+      }
+    }
+    return aCrypter;
+  }
+}

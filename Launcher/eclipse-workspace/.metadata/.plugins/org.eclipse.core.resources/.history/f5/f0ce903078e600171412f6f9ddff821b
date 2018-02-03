@@ -1,0 +1,59 @@
+package insanity.Launcher;
+
+import static fr.theshark34.swinger.Swinger.getResource;
+import static fr.theshark34.swinger.Swinger.setResourcePath;
+import static fr.theshark34.swinger.Swinger.setSystemLookNFeel;
+
+import javax.swing.JFrame;
+
+import com.sun.awt.AWTUtilities;
+
+import fr.theshark34.openlauncherlib.util.CrashReporter;
+import fr.theshark34.swinger.util.WindowMover;
+
+@SuppressWarnings("serial")
+public class LauncherFrame extends JFrame {
+
+	private static LauncherFrame instance;
+	private LauncherPanel launcherPanel;
+	private static CrashReporter crashReporter;
+	
+	public LauncherFrame() {
+		this.setTitle("Insanity Launcher");
+		this.setSize(975, 625);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setUndecorated(true);
+		this.setIconImage (getResource("icon.png"));
+		this.setContentPane(launcherPanel = new LauncherPanel());
+		AWTUtilities.setWindowOpacity(this, 0.0F);
+		
+		WindowMover mover = new WindowMover(this);
+		this.addMouseListener(mover);
+		this.addMouseMotionListener(mover);
+		
+		this.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+
+		setSystemLookNFeel();
+		setResourcePath("/insanity/Launcher/Resource");
+		Launcher.IF_CRASHES_DIR.mkdirs();
+		crashReporter = new CrashReporter("Insanity launcher", Launcher.IF_CRASHES_DIR);
+		
+		instance = new LauncherFrame();
+	}
+
+	public static LauncherFrame getInstace( ) {
+		return instance;
+	}
+	
+	public LauncherPanel getLauncherPanel() {
+		return this.launcherPanel;
+	}
+	
+	public static CrashReporter getCrashReporter() {
+		return crashReporter;
+	}
+}
